@@ -10,6 +10,8 @@ pipeline {
         stage('Test') {
             steps {
         sh '''
+         gcloud compute instances list --zone=us-central1-a
+         
          gcloud compute scp /var/lib/jenkins/workspace/project-ToCS_main root@anusha-apache-server:/var/www/html --zone=us-central1-a
         '''
       }
