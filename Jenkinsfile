@@ -1,19 +1,21 @@
 pipeline {
     agent any
-    
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
         stage('Build') {
             steps {
-                sh 'echo Building the application'
-                sh '''
-                gcloud compute ssh root@anusha-apache-server --zone=us-central1-a -- "rm -rf /var/www/html/*"
-                gcloud compute scp --recurse /var/lib/jenkins/workspace/multiPipeline_main/ root@anusha-apache-server:/var/www/html --zone=us-central1-a
-                '''
+                echo 'Application build stage...' 
+        }
+       }
+        stage('Test') {
+            steps {
+        sh '''
+         gcloud compute scp /var/lib/jenkins/workspace/Jenkins-GDC-Demo_main/index.html root@anusha-apache-server:/var/www/html --zone=us-central1-a
+        '''
+      }
+        }
+        stage('Run') {
+            steps {
+                echo 'Application run stage' 
             }
         }
     }
